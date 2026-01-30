@@ -1,12 +1,14 @@
 # TECLADO.CCSIT.2026_THE-FIFTH-GEAR
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <title>Tech Fest Registration</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     * { box-sizing: border-box; }
 
@@ -273,7 +275,28 @@ button::after {
     <div class="success" id="successMsg">
       ✅ Registration Successful!<br />
       See you at the fest 🚀
+    
+      <br><br>
+    
+      <a
+        id="waJoinBtn"
+        href="https://chat.whatsapp.com/GbVDdVB3pSFKymxNxYkdv7"
+        target="_blank"
+        style="
+          display:inline-block;
+          padding:12px 18px;
+          border-radius:30px;
+          background:linear-gradient(90deg,#25D366,#128C7E);
+          color:#fff;
+          text-decoration:none;
+          font-weight:bold;
+          box-shadow:0 0 15px rgba(37,211,102,0.8);
+        "
+      >
+        👉 Join Official WhatsApp Group
+      </a>
     </div>
+    
 
     <footer>
       © 2026 TECLADO, THE FIFTH GEAR
