@@ -374,7 +374,7 @@ const college = document.getElementById("college").value.trim();
   
       try {
         const res = await fetch(
-          "https://script.google.com/macros/s/AKfycby-otM1LEkrTQ8fwVvL1S_Yc3sblhhFZ6l18WDSwknwe0yRJRFZmiQ1w9bCX8V9CWFqPA/exec",
+          "https://script.google.com/macros/s/AKfycbwZD34qmlEVMxWrGxd7_jyORkO9l4M--KOqH0pOrXDPSwe2JKHhZHScK7QQmNO9NuKdUg/exec",
           {
             method: "POST",
             body: JSON.stringify(payload)
