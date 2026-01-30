@@ -209,17 +209,11 @@ button::after {
     <p>CCSIT PALAKKAD</p>
 
     <form id="regForm">
-      <label>Full Name</label>
-      <input type="text" required />
+       <input type="text" id="name" required />
+<input type="email" id="email" required />
+<input type="tel" id="phone" required />
+<input type="text" id="college" required />
 
-      <label>Email Address</label>
-      <input type="email" required />
-
-      <label>Phone Number</label>
-      <input type="tel" required />
-
-      <label>College Name</label>
-      <input type="text" required />
 <label>Select Events</label>
 
 <div class="checkbox-group">
@@ -278,21 +272,7 @@ button::after {
     
       <br><br>
     
-      <a
-        id="waJoinBtn"
-        href="https://chat.whatsapp.com/GbVDdVB3pSFKymxNxYkdv7"
-        target="_blank"
-        style="
-          display:inline-block;
-          padding:12px 18px;
-          border-radius:30px;
-          background:linear-gradient(90deg,#25D366,#128C7E);
-          color:#fff;
-          text-decoration:none;
-          font-weight:bold;
-          box-shadow:0 0 15px rgba(37,211,102,0.8);
-        "
-      >
+      <a href="https://chat.whatsapp.com/GbVDdVB3pSFKymxNxYkdv7">
         👉 Join Official WhatsApp Group
       </a>
     </div>
@@ -327,7 +307,7 @@ button::after {
   }
 
   function generateQR(amount) {
-    const name = document.querySelector('input[type="text"]').value || "Participant";
+  const name = document.getElementById("name").value.trim() || "Participant";
     const upiURL = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent("TECLADO Registration - " + name)}`;
 
     qrImg.src =
@@ -350,10 +330,11 @@ button::after {
   
   paidBtn.addEventListener("click", async () => {
   
-    const name = document.querySelector('input[type="text"]').value.trim();
-    const email = document.querySelector('input[type="email"]').value.trim();
-    const phone = document.querySelector('input[type="tel"]').value.trim();
-    const college = document.querySelectorAll('input[type="text"]')[1].value.trim();
+    const name = document.getElementById("name").value.trim();
+const email = document.getElementById("email").value.trim();
+const phone = document.getElementById("phone").value.trim();
+const college = document.getElementById("college").value.trim();
+
     const events = [...document.querySelectorAll('input[name="events"]:checked')].map(e => e.value);
     const paymentMode = document.getElementById("paymentMode").value;
     const file = document.getElementById("paymentProof").files[0];
@@ -409,15 +390,6 @@ button::after {
         form.style.display = "none";
         entryPass.style.display = "block";
         success.style.display = "block";
-  
-        const message =
-          `Hi, I have successfully registered for TECLADO ✅%0A%0A` +
-          `Name: ${name}%0A` +
-          `Events: ${events.join(", ")}`;
-  
-        setTimeout(() => {
-          window.open(`https://wa.me/?text=${message}`, "_blank");
-        }, 1200);
   
       } catch (err) {
         alert("Registration failed. Try again.");
