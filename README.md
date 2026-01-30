@@ -284,8 +284,6 @@ button::after {
   </div>
 
   <script>
-  const form = document.getElementById('regForm');
-  const success = document.getElementById('successMsg');
   const feeBox = document.getElementById('feeBox');
   const qrBox = document.getElementById('qrBox');
   const qrImg = document.getElementById('qrImg');
