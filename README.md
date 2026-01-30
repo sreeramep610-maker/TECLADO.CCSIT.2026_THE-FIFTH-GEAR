@@ -274,6 +274,9 @@ button::after {
     <div class="success" id="successMsg">
       ✅ Registration Successful!<br />
       See you at the fest 🚀
+      <a href="https://chat.whatsapp.com/GbVDdVB3pSFKymxNxYkdv7">
+      JOIN THE OFFICIAL WATSAPP GROUP
+      </a>
     </div>
 
     <footer>
