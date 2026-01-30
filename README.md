@@ -1,5 +1,4 @@
 # TECLADO.CCSIT.2026_THE-FIFTH-GEAR
-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -209,11 +208,17 @@ button::after {
     <p>CCSIT PALAKKAD</p>
 
     <form id="regForm">
-       <input type="text" id="name" required />
-<input type="email" id="email" required />
-<input type="tel" id="phone" required />
-<input type="text" id="college" required />
+      <label>Full Name</label>
+      <input type="text" required />
 
+      <label>Email Address</label>
+      <input type="email" required />
+
+      <label>Phone Number</label>
+      <input type="tel" required />
+
+      <label>College Name</label>
+      <input type="text" required />
 <label>Select Events</label>
 
 <div class="checkbox-group">
@@ -269,14 +274,7 @@ button::after {
     <div class="success" id="successMsg">
       ✅ Registration Successful!<br />
       See you at the fest 🚀
-    
-      <br><br>
-    
-      <a href="https://chat.whatsapp.com/GbVDdVB3pSFKymxNxYkdv7">
-        👉 Join Official WhatsApp Group
-      </a>
     </div>
-    
 
     <footer>
       © 2026 TECLADO, THE FIFTH GEAR
@@ -284,6 +282,8 @@ button::after {
   </div>
 
   <script>
+  const form = document.getElementById('regForm');
+  const success = document.getElementById('successMsg');
   const feeBox = document.getElementById('feeBox');
   const qrBox = document.getElementById('qrBox');
   const qrImg = document.getElementById('qrImg');
@@ -305,7 +305,7 @@ button::after {
   }
 
   function generateQR(amount) {
-  const name = document.getElementById("name").value.trim() || "Participant";
+    const name = document.querySelector('input[type="text"]').value || "Participant";
     const upiURL = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(PAYEE_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent("TECLADO Registration - " + name)}`;
 
     qrImg.src =
@@ -320,92 +320,93 @@ button::after {
 </script>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwZD34qmlEVMxWrGxd7_jyORkO9l4M--KOqH0pOrXDPSwe2JKHhZHScK7QQmNO9NuKdUg/exec"; // 🔴 IMPORTANT
-
-const paidBtn = document.getElementById("paidBtn");
-const entryPass = document.getElementById("entryPass");
-const entryQR = document.getElementById("entryQR");
-const form = document.getElementById("regForm");
-const success = document.getElementById("successMsg");
-
-paidBtn.addEventListener("click", () => {
-
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const phone = document.getElementById("phone").value.trim();
-  const college = document.getElementById("college").value.trim();
-  const paymentMode = document.getElementById("paymentMode").value;
-  const file = document.getElementById("paymentProof").files[0];
-
-  const events = [...document.querySelectorAll('input[name="events"]:checked')]
-                .map(e => e.value);
-
-  if (!name || !email || !phone || !college) {
-    alert("Please fill all personal details");
-    return;
-  }
-
-  if (events.length === 0) {
-    alert("Please select at least one event");
-    return;
-  }
-
-  if (!file) {
-    alert("Upload payment screenshot");
-    return;
-  }
-
-  paidBtn.disabled = true;
-  paidBtn.innerText = "⏳ Registering...";
-
-  const reader = new FileReader();
-
-  reader.onload = async () => {
-    const payload = {
-      name,
-      email,
-      phone,
-      college,
-      events,
-      amount: calculateFee(),
-      paymentMode,
-      screenshot: reader.result.split(",")[1],
-      mimeType: file.type
-    };
-
-    try {
-      const res = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      const result = await res.json();
-
-      if (!result.success) {
-        throw new Error(result.error || "Server error");
-      }
-
-      entryQR.src =
-        "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
-        encodeURIComponent(result.qrData);
-
-      form.style.display = "none";
-      entryPass.style.display = "block";
-      success.style.display = "block";
-
-    } catch (err) {
-      console.error(err);
-      alert("❌ Registration failed. Please try again.");
-      paidBtn.disabled = false;
-      paidBtn.innerText = "✅ Confirm Payment & Register";
+  const WHATSAPP_GROUP = "https://chat.whatsapp.com/GbVDdVB3pSFKymxNxYkdv7";
+  
+  const paidBtn = document.getElementById("paidBtn");
+  const entryPass = document.getElementById("entryPass");
+  const entryQR = document.getElementById("entryQR");
+  
+  paidBtn.addEventListener("click", async () => {
+  
+    const name = document.querySelector('input[type="text"]').value.trim();
+    const email = document.querySelector('input[type="email"]').value.trim();
+    const phone = document.querySelector('input[type="tel"]').value.trim();
+    const college = document.querySelectorAll('input[type="text"]')[1].value.trim();
+    const events = [...document.querySelectorAll('input[name="events"]:checked')].map(e => e.value);
+    const paymentMode = document.getElementById("paymentMode").value;
+    const file = document.getElementById("paymentProof").files[0];
+  
+    if (!name || !email || !phone || !college) {
+      alert("Please fill all personal details");
+      return;
     }
-  };
-
-  reader.readAsDataURL(file);
-});
-</script>
-
+  
+    if (events.length === 0) {
+      alert("Please select at least one event");
+      return;
+    }
+  
+    if (paymentMode === "UPI QR" && !file) {
+      alert("Upload payment screenshot");
+      return;
+    }
+  
+    paidBtn.disabled = true;
+    paidBtn.innerText = "⏳ Processing...";
+  
+    const reader = new FileReader();
+  
+    reader.onload = async () => {
+      const payload = {
+        name,
+        email,
+        phone,
+        college,
+        events,
+        amount: calculateFee(),
+        paymentMode,
+        screenshot: reader.result.split(",")[1],
+        mimeType: file.type
+      };
+  
+      try {
+        const res = await fetch(
+          "https://script.google.com/macros/s/AKfycbwZD34qmlEVMxWrGxd7_jyORkO9l4M--KOqH0pOrXDPSwe2JKHhZHScK7QQmNO9NuKdUg/exec",
+          {
+            method: "POST",
+            body: JSON.stringify(payload)
+          }
+        );
+  
+        const result = await res.json();
+  
+        entryQR.src =
+          "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=" +
+          encodeURIComponent(result.qrData);
+  
+        form.style.display = "none";
+        entryPass.style.display = "block";
+        success.style.display = "block";
+  
+        const message =
+          `Hi, I have successfully registered for TECLADO ✅%0A%0A` +
+          `Name: ${name}%0A` +
+          `Events: ${events.join(", ")}`;
+  
+        setTimeout(() => {
+          window.open(`https://wa.me/?text=${message}`, "_blank");
+        }, 1200);
+  
+      } catch (err) {
+        alert("Registration failed. Try again.");
+        paidBtn.disabled = false;
+        paidBtn.innerText = "✅ Confirm Payment & Register";
+      }
+    };
+  
+    reader.readAsDataURL(file);
+  });
+  </script>
   
 
 <!-- 📸 INSTAGRAM BUTTON (BOTTOM RIGHT) -->
